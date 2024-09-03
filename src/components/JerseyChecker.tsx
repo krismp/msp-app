@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { JerseyInfo } from '@/pages/api/jersey'
 
 const JerseyChecker: React.FC = () => {
+  const [gender, setGender] = useState('Laki-laki')
   const [jerseyNumber, setJerseyNumber] = useState('')
   const [result, setResult] = useState<string | null>(null)
   const [isNumberAvailable, setIsNumberAvailable] = useState(false)
@@ -26,7 +27,7 @@ const JerseyChecker: React.FC = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ action: 'check', number: jerseyNumber }),
+        body: JSON.stringify({ action: 'check', number: jerseyNumber, gender }),
       })
       if (!response.ok) {
         throw new Error('Network response was not ok')
@@ -98,6 +99,17 @@ const JerseyChecker: React.FC = () => {
       </div>
 
       <div className="flex flex-wrap items-end gap-2 px-4 py-1 max-w-[480px] mx-auto">
+        <div className="flex flex-col w-full mb-2">
+          <select
+            value={gender}
+            onChange={(e) => setGender(e.target.value)}
+            className="form-select w-full rounded-xl text-[#111418] focus:outline-none focus:ring-0 border-none bg-[#f0f2f5] h-12 text-center"
+          >
+            <option value="Laki-laki">Laki-laki</option>
+            <option value="Perempuan">Perempuan</option>
+            <option value="Anak-anak">Anak-anak</option>
+          </select>
+        </div>
         <label className="flex flex-col flex-1">
           <div className="flex items-stretch rounded-xl">
             <input

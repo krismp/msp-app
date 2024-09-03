@@ -32,13 +32,13 @@ export default async function handler(
   }
 
   try {
-    const { action, number } = req.body
+    const { action, number, gender } = req.body
     const data = await getSheetData()
 
     if (action === 'check') {
       const jerseyInfo: JerseyInfo[] = [];
       for (let i = 1; i < data.length; i++) {
-        if (data[i] && data[i][7] === number) {
+        if (data[i] && data[i][7] === number && data[i][6] === gender) {
           jerseyInfo.push({
             name: data[i][4],
             gender: data[i][5],
