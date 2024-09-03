@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import Link from 'next/link'
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -20,6 +20,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <div className="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden">
           {children}
+          <SpeedInsights />
         </div>
       </body>
     </html>
