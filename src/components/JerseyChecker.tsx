@@ -73,6 +73,16 @@ const JerseyChecker: React.FC = () => {
     }
   }
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    if (/^\d*$/.test(value)) {
+      setJerseyNumber(value)
+      setError(null)
+    } else {
+      setError('Please enter numbers only')
+    }
+  }
+
   const isLoading = checkLoading || generateLoading
 
   return (
@@ -98,31 +108,35 @@ const JerseyChecker: React.FC = () => {
         </div>
       </div>
 
-      <div className="flex flex-wrap items-end gap-2 px-4 py-1 max-w-[480px] mx-auto">
-        <div className="flex flex-col w-full mb-2">
+      <div className="flex flex-col gap-2 px-4 py-1 max-w-[480px] mx-auto">
+        <div className="relative">
           <select
             value={gender}
             onChange={(e) => setGender(e.target.value)}
-            className="form-select w-full rounded-xl text-[#111418] focus:outline-none focus:ring-0 border-none bg-[#f0f2f5] h-12 text-center"
+            className="appearance-none w-full rounded-xl text-[#111418] focus:outline-none focus:ring-0 border-none bg-[#f0f2f5] h-14 px-4 pr-8 text-base font-normal"
           >
             <option value="Laki-laki">Laki-laki</option>
             <option value="Perempuan">Perempuan</option>
             <option value="Anak-anak">Anak-anak</option>
           </select>
-        </div>
-        <label className="flex flex-col flex-1">
-          <div className="flex items-stretch rounded-xl">
-            <input
-              placeholder="Enter a number"
-              className="form-input w-full rounded-xl text-[#111418] focus:outline-none focus:ring-0 border-none bg-[#f0f2f5] h-14 placeholder:text-[#60758a] p-4 text-center"
-              value={jerseyNumber}
-              onChange={(e) => {
-                setJerseyNumber(e.target.value);
-                setError(null);
-              }}
-            />
+          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-[#111418]">
+            <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+              <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+            </svg>
           </div>
-        </label>
+        </div>
+        <div className="flex items-stretch rounded-xl">
+          <input
+            type="text"
+            inputMode="numeric"
+            placeholder="Enter a number"
+            className={`form-input w-full rounded-xl text-[#111418] focus:outline-none focus:ring-0 border-none bg-[#f0f2f5] h-14 placeholder:text-[#60758a] p-4 text-center ${
+              error ? 'border-red-500' : ''
+            }`}
+            value={jerseyNumber}
+            onChange={handleInputChange}
+          />
+        </div>
       </div>
 
       <div className="flex justify-center">

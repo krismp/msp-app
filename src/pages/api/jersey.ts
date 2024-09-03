@@ -38,7 +38,7 @@ export default async function handler(
     if (action === 'check') {
       const jerseyInfo: JerseyInfo[] = [];
       for (let i = 1; i < data.length; i++) {
-        if (data[i] && data[i][7] === number && data[i][6] === gender) {
+        if (data[i] && data[i][7] === number && data[i][5] === gender) {
           jerseyInfo.push({
             name: data[i][4],
             gender: data[i][5],
