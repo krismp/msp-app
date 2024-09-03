@@ -12,15 +12,14 @@ const sheets = google.sheets({ version: 'v4', auth })
 async function getSheetData() {
   const response = await sheets.spreadsheets.values.get({
     spreadsheetId: process.env.SHEET_ID,
-    range: 'A:H', // Adjust this range based on your sheet structure
+    range: 'A:I', // Adjust this range based on your sheet structure
   })
   return response.data.values || []
 }
 
 export interface JerseyInfo {
   name: string;
-  gender: string;
-  size: string;
+  team: string;
 }
 
 export default async function handler(
@@ -32,17 +31,16 @@ export default async function handler(
   }
 
   try {
-    const { action, number, gender } = req.body
+    const { action, number, team } = req.body
     const data = await getSheetData()
 
     if (action === 'check') {
       const jerseyInfo: JerseyInfo[] = [];
       for (let i = 1; i < data.length; i++) {
-        if (data[i] && data[i][7] === number && data[i][5] === gender) {
+        if (data[i] && data[i][7] === number && data[i][8] === team) {
           jerseyInfo.push({
             name: data[i][4],
-            gender: data[i][5],
-            size: data[i][6]
+            team: data[i][8],
           });
         }
       }

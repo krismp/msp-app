@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { JerseyInfo } from '@/pages/api/jersey'
 
 const JerseyChecker: React.FC = () => {
-  const [gender, setGender] = useState('Laki-laki')
+  const [team, setTeam] = useState('MSP Putra')
   const [jerseyNumber, setJerseyNumber] = useState('')
   const [result, setResult] = useState<string | null>(null)
   const [isNumberAvailable, setIsNumberAvailable] = useState(false)
@@ -27,7 +27,7 @@ const JerseyChecker: React.FC = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ action: 'check', number: jerseyNumber, gender }),
+        body: JSON.stringify({ action: 'check', number: jerseyNumber, team }),
       })
       if (!response.ok) {
         throw new Error('Network response was not ok')
@@ -37,7 +37,7 @@ const JerseyChecker: React.FC = () => {
         setResult(`<p class="text-green-500">Yeay! Selamat!</p><small>#${jerseyNumber} belum dimiliki. Segera pesan!</small>`)
         setIsNumberAvailable(true)
       } else {
-        setResult(`<p class="text-red-500">${data.message}</p> <ol>${data.jerseyInfo.map((jersey: JerseyInfo) => `<li class="text-sm"><small>${jersey.name} (${jersey.gender}, ${jersey.size})</small></li>`).join('')}</ol>`)
+        setResult(`<p class="text-red-500">${data.message}</p> <ol>${data.jerseyInfo.map((jersey: JerseyInfo) => `<li class="text-sm"><small>${jersey.name} (${jersey.team})</small></li>`).join('')}</ol>`)
         setIsNumberAvailable(false)
       }
     } catch (error) {
@@ -111,13 +111,13 @@ const JerseyChecker: React.FC = () => {
       <div className="flex flex-col gap-2 px-4 py-1 max-w-[480px] mx-auto">
         <div className="relative">
           <select
-            value={gender}
-            onChange={(e) => setGender(e.target.value)}
+            value={team}
+            onChange={(e) => setTeam(e.target.value)}
             className="appearance-none w-full rounded-xl text-[#111418] focus:outline-none focus:ring-0 border-none bg-[#f0f2f5] h-14 px-4 pr-8 text-base font-normal"
           >
-            <option value="Laki-laki">Laki-laki</option>
-            <option value="Perempuan">Perempuan</option>
-            <option value="Anak-anak">Anak-anak</option>
+            <option value="MSP Putra">MSP Putra</option>
+            <option value="MSP Putri">MSP Putri</option>
+            <option value="MSP Junior">MSP Junior</option>
           </select>
           <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-[#111418]">
             <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
