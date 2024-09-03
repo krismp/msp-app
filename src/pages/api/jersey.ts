@@ -14,7 +14,7 @@ async function getSheetData() {
     spreadsheetId: process.env.SHEET_ID,
     range: 'A:H', // Adjust this range based on your sheet structure
   })
-  return response.data.values
+  return response.data.values || []
 }
 
 export default async function handler(
