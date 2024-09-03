@@ -3,6 +3,7 @@
 
 import React, { useState } from 'react'
 import Image from 'next/image'
+import { JerseyInfo } from '@/pages/api/jersey'
 
 const JerseyChecker: React.FC = () => {
   const [jerseyNumber, setJerseyNumber] = useState('')
@@ -35,7 +36,7 @@ const JerseyChecker: React.FC = () => {
         setResult(`<p class="text-green-500">Yeay! Selamat!</p><small>#${jerseyNumber} belum dimiliki. Segera pesan!</small>`)
         setIsNumberAvailable(true)
       } else {
-        setResult(`<p class="text-red-500">#${jerseyNumber} sudah ada.</p> <small>${data.owner}</small>`)
+        setResult(`<p class="text-red-500">${data.message}</p> <ol>${data.jerseyInfo.map((jersey: JerseyInfo) => `<li class="text-sm"><small>${jersey.name} (${jersey.gender}, ${jersey.size})</small></li>`).join('')}</ol>`)
         setIsNumberAvailable(false)
       }
     } catch (error) {
@@ -137,7 +138,7 @@ const JerseyChecker: React.FC = () => {
         </p>
         {isNumberAvailable && <>
           <a
-            href="https://docs.google.com/forms/d/e/your-form-id/viewform"
+            href="https://forms.gle/ZtKE7cAquHytydTS8"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block bg-[#0d7cf2] text-white text-lg font-bold py-3 px-6 rounded-xl hover:bg-[#0b6ad3] transition-colors duration-300"

@@ -17,6 +17,12 @@ async function getSheetData() {
   return response.data.values || []
 }
 
+export interface JerseyInfo {
+  name: string;
+  gender: string;
+  size: string;
+}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -30,15 +36,25 @@ export default async function handler(
     const data = await getSheetData()
 
     if (action === 'check') {
-      for (let i = 1; i < data?.length; i++) {
-        if (data?.[i]?.[7] === number) { // Assuming 'Nomor Punggung' is the 8th column
-          return res.status(200).json({
-            available: false,
-            owner: `${data?.[i][4]} (${data?.[i][5]})` // 'Nama Punggung' and 'Jenis Kelamin'
-          })
+      const jerseyInfo: JerseyInfo[] = [];
+      for (let i = 1; i < data.length; i++) {
+        if (data[i] && data[i][7] === number) {
+          jerseyInfo.push({
+            name: data[i][4],
+            gender: data[i][5],
+            size: data[i][6]
+          });
         }
       }
-      return res.status(200).json({ available: true })
+      if (jerseyInfo.length === 0) {
+        return res.json({ available: true, message: `Jersey number ${number} is available.` });
+      }
+
+      return res.json({
+        available: false,
+        message: `#${number} sudah di miliki ${jerseyInfo.length} pemain.`, 
+        jerseyInfo
+      });
     } else if (action === 'generate') {
       const usedNumbers = data?.slice(1).map(row => parseInt(row[7])).filter(Boolean)
       let generatedNumber
