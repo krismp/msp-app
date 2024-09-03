@@ -1,36 +1,84 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Jersey Number Availability Checker
+
+This application allows users to check the availability of jersey numbers and claim them if they're available.
+
+## Features
+
+- Check availability of jersey numbers
+- Generate random available numbers
+- Claim available jersey numbers through a Google Form
+
+## Technologies Used
+
+- Next.js
+- React
+- Tailwind CSS
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Node.js (v14 or later)
+- npm or yarn
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Installation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Clone the repository:
+   ```
+   git clone https://github.com/your-username/jersey-number-checker.git
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+2. Navigate to the project directory:
+   ```
+   cd jersey-number-checker
+   ```
 
-## Learn More
+3. Install dependencies:
+   ```
+   npm install
+   ```
+   or
+   ```
+   yarn install
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+4. Create a `.env.local` file in the root directory and add your environment variables:
+   ```
+   NEXT_PUBLIC_GOOGLE_FORM_URL=https://docs.google.com/forms/d/e/your-form-id/viewform
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+5. Start the development server:
+   ```
+   npm run dev
+   ```
+   or
+   ```
+   yarn dev
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+6. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
-## Deploy on Vercel
+## Usage
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Enter a jersey number in the input field.
+2. Click "Check" to see if the number is available.
+3. If the number is available, you'll be presented with a link to claim it via a Google Form.
+4. Alternatively, click "Generate for Me" to get a random available number.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## Social Media
+
+Follow us on:
+- [YouTube](https://www.youtube.com/@mspbasketball)
+- [Instagram](https://www.instagram.com/msp.basketball)
+
+## Developer
+
+This app was developed by [kris.mp](https://www.instagram.com/kris.mp).
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
