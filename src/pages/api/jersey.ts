@@ -54,12 +54,39 @@ export default async function handler(
         jerseyInfo
       });
     } else if (action === 'generate') {
-      const usedNumbers = data?.slice(1).map(row => parseInt(row[7])).filter(Boolean)
-      let generatedNumber
-      do {
-        generatedNumber = Math.floor(Math.random() * 99) + 1 // Generate number between 1 and 99
-      } while (usedNumbers?.includes(generatedNumber))
-      return res.status(200).json({ generatedNumber })
+      const usedNumbers = new Set(
+        data
+          .slice(1)
+          .filter(row => row[8] === team) // Filter by team
+          .map(row => row[7]) // Keep as string to preserve "00"
+          .filter(Boolean)
+      )
+
+      const allPossibleNumbers = ['00', '0', ...Array.from({length: 99}, (_, i) => (i + 1).toString().padStart(2, '0'))]
+      const availableNumbers = allPossibleNumbers.filter(num => !usedNumbers.has(num))
+
+      if (availableNumbers.length === 0) {
+        return res.status(404).json({ error: `No available numbers found for team ${team}` })
+      }
+
+      // Randomly select one of the available numbers
+      const randomIndex = Math.floor(Math.random() * availableNumbers.length)
+      const generatedNumber = availableNumbers[randomIndex]
+
+      // Select up to 5 numbers to return (including the generated one)
+      const numbersToReturn = [generatedNumber]
+      for (let i = 0; i < 4 && i < availableNumbers.length - 1; i++) {
+        let index
+        do {
+          index = Math.floor(Math.random() * availableNumbers.length)
+        } while (numbersToReturn.includes(availableNumbers[index]))
+        numbersToReturn.push(availableNumbers[index])
+      }
+
+      return res.status(200).json({ 
+        generatedNumber,
+        availableNumbers: numbersToReturn
+      })
     } else {
       return res.status(400).json({ error: 'Invalid action' })
     }
